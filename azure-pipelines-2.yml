@@ -1,0 +1,16 @@
+trigger:
+  - main  # Adjust branch name if needed
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+  - script: docker run --rm hashicorp/terraform:latest version
+    displayName: "Check Terraform Version"
+
+  - script: docker run --rm -v $(pwd):/workspace -w /workspace hashicorp/terraform:latest init
+    displayName: "Terraform Init"
+
+  - script: docker run --rm -v $(pwd):/workspace -w /workspace hashicorp/terraform:latest plan
+    displayName: "Terraform Plan"
